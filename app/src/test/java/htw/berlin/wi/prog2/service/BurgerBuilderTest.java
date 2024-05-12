@@ -83,5 +83,15 @@ class BurgerBuilderTest {
         assertTrue(Arrays.stream(fields).map(Field::getType).collect(Collectors.toList()).contains(double.class));
     }
 
+    @Test
+    @DisplayName("try to build a burger with less than two ingredients")
+    public void testBurgerBuilderThrowsExceptionWithLessThanTwoIngredients() {
+        BurgerBuilder builder = new BurgerBuilder();
+        builder.add(new Ingredient("Brot", 1.0, 100));
+
+        assertThrows(IllegalBurgerException.class, builder::buildPrecomputed, "BurgerBuilder sollte eine IllegalBurgerException werfen, wenn weniger als zwei Zutaten vorhanden sind.");
+        assertThrows(IllegalBurgerException.class, builder::buildDynamicallyComputed, "BurgerBuilder sollte eine IllegalBurgerException werfen, wenn weniger als zwei Zutaten vorhanden sind.");
+    }
+
     // TODO hier mind. einen Test hinzufügen, der das korrekte Werfen der IllegalBurgerException testet (assertThrows)
 }

@@ -26,6 +26,7 @@ public class BurgerBuilder {
         int calories = ingredients.stream().mapToInt(Ingredient::getCalories).sum();
         List<String> ingredientNames = ingredients.stream().map(Ingredient::getName).collect(Collectors.toList());
 
+        ingredients.clear();
         return new PrecomputedBurger(price, calories, ingredientNames);
     }
 
@@ -33,7 +34,9 @@ public class BurgerBuilder {
         if (ingredients.size() < 2) {
             throw new IllegalBurgerException("Ein gültiger Burger benötigt mindestens zwei Zutaten.");
         }
-        return new DynamicallyComputedBurger(new ArrayList<>(ingredients));
+        Burger burger = new DynamicallyComputedBurger(new ArrayList<>(ingredients));
+        ingredients.clear(); // Zutatenliste leeren
+        return burger;
     }
 }
 
